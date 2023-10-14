@@ -19,7 +19,7 @@ jobs:
         run: |
           curl -LO https://github.com/spiffe/spire/releases/download/v${{ env.SPIRE_VERSION }}/spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
           tar -xzvf spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
-          JWT=$(spire-${{ env.SPIRE_VERSION }}/bin/spire-agent api fetch jwt -audience=sigstore -socketPath=/spiffe-workload-api/spire-agent.sock | head -2 | tail -1))
+          JWT=$(spire-${{ env.SPIRE_VERSION }}/bin/spire-agent api fetch jwt -audience=sigstore -socketPath=/spiffe-workload-api/spire-agent.sock | head -2 | tail -1)
           echo $JWT
       
 
