@@ -15,11 +15,37 @@ jobs:
         with:
           repository: ansible-middleware/wildfly
           path: wildfly
-      - name: Download Spire Agent
+      - name: Checkout ansible-sign
+        uses: actions/checkout@v4
+        with:
+          repository: mayaCostantini/ansible-sign
+          path: ansible-sign
+          ref: sigstorev2-support
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Download spire-agent and obtain JWT
+        run: |
+          python -m pip install wheel
+          cd ansible-sign
+          python setup.py bdist_wheel
+          python -m pip install dist/*
+      - name: Download spire-agent and obtain JWT
         run: |
           curl -LO https://github.com/spiffe/spire/releases/download/v${{ env.SPIRE_VERSION }}/spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
           tar -xzvf spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
           JWT=$(spire-${{ env.SPIRE_VERSION }}/bin/spire-agent api fetch jwt -audience=sigstore -socketPath=/spiffe-workload-api/spire-agent.sock | head -2 | tail -1)
-          echo $JWT
+          echo spire_jwt=$JWT >> $GITHUB_OUTPUT
+      - name: Configure Project Signing
+        run: |
+          cat << EOF > wildfly/MANIFEST.in
+          recursive-include playbooks *.yml
+          recursive-include roles *.yml
+          EOF
+              
+      # - name: Sign Project
+      #   uses: mayaCostantini/sigstore-ansible-github-action@main
+
       
 
