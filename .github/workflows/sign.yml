@@ -1,0 +1,25 @@
+name: ansible-sign-spiffe
+on:
+  push:
+    branches:
+      - gh-action
+jobs:
+  ansible-sign-spiffe:
+    name: ansible-sign-spiffe
+    runs-on: [self-hosted, linux]
+    env:
+      SPIRE_VERSION: 1.8.2
+    steps:
+      - name: Checkout Wildfly Project to Sign
+        uses: actions/checkout@v4
+        with:
+          repository: ansible-middleware/wildfly
+          path: wildfly
+      - name: Download Spire Agent
+        run: |
+          curl -LO https://github.com/spiffe/spire/releases/download/v${{ env.SPIRE_VERSION }}/spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
+          tar -xzvf spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
+          JWT=$(spire-${{ env.SPIRE_VERSION }}/bin/spire-agent api fetch jwt -audience=sigstore -socketPath=/spiffe-workload-api/spire-agent.sock | head -2 | tail -1))
+          echo $JWT
+      
+
