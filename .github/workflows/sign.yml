@@ -23,7 +23,7 @@ jobs:
           ref: sigstorev2-support
       - name: Download spire-agent and obtain JWT
         run: |
-          python -m pip install --user wheel
+          python -m pip install --user setuptools setuptools_scm wheel
           cd ansible-sign
           python setup.py bdist_wheel
           python -m pip install --user dist/*
