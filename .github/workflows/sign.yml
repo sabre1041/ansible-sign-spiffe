@@ -24,7 +24,7 @@ jobs:
       - name: Download spire-agent and obtain JWT
         run: |
           python -m pip install -U --user pip setuptools setuptools_scm wheel
-          cd ansible-sign
+          cd ansible-sign 
           python setup.py bdist_wheel
           python -m pip install --user dist/*
       - name: Download spire-agent and obtain JWT
