@@ -36,7 +36,7 @@ jobs:
           set -e
           curl -LO https://github.com/spiffe/spire/releases/download/v${{ env.SPIRE_VERSION }}/spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
           tar -xzvf spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
-          JWT=$(spire-${{ env.SPIRE_VERSION }}/bin/spire-agent api fetch jwt -audience=sigstore -socketPath=${SPIFFE_ENDPOINT_SOCKET} | head -2 | xargs)
+          JWT=$(spire-${{ env.SPIRE_VERSION }}/bin/spire-agent api fetch jwt -audience=sigstore -socketPath=${SPIFFE_ENDPOINT_SOCKET} | head -2 | sed -n '2 p' | xargs)
           echo spire_jwt=$JWT >> $GITHUB_OUTPUT
       - name: Configure Project Signing
         run: |
