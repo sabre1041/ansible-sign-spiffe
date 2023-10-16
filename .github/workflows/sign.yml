@@ -63,12 +63,10 @@ jobs:
           identity-token: ${{ steps.spire-agent.outputs.spire_jwt }}
           fulcio-url: "${{ vars.FULCIO_URL }}"
           rekor-url: "${{ vars.REKOR_URL }}"
-          internal-be-careful-debug: true
           install-ansible-sign: 'false'
           ctfe: ctfe.pub
           rekor-root-pubkey: rekor.pub
           push-artifacts: 'false'
-
-
-      
-
+          verify: true
+          verify-cert-identity: "${{ vars.CERT_IDENTITY }}"
+          verify-oidc-issuer: "${{ vars.OIDC_URL }}"
