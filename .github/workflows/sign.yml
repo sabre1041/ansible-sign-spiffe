@@ -30,6 +30,7 @@ jobs:
           python -m pip install --user dist/*
           cd ..
       - name: Download spire-agent and obtain JWT
+        id: spire-agent
         run: |
           set -e
           curl -LO https://github.com/spiffe/spire/releases/download/v${{ env.SPIRE_VERSION }}/spire-${{ env.SPIRE_VERSION }}-linux-amd64-musl.tar.gz
@@ -54,8 +55,16 @@ jobs:
           # Download CT log Certificate
           curl -L -o ctlog.pub ${{ vars.TUF_URL }}/targets/ctfe.pub
 
-      # - name: Sign Project
-      #   uses: mayaCostantini/sigstore-ansible-github-action@main
+      - name: Sign Project
+        uses: mayaCostantini/sigstore-ansible-github-action@main
+        with:
+          project-path: "./wildfly"
+          identity-token: ${{ steps.spire-agent.outputs.spire_jwt }}
+          fulcio-url: "${{ vars.FULCIO_URL }}"
+          rekor-url: "${{ vars.REKOR_URL }}"
+          ctfe: ctfe.pub
+          rekor-root-pubkey: rekor.pub
+
 
       
 
