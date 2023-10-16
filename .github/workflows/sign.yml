@@ -29,6 +29,7 @@ jobs:
           python setup.py bdist_wheel
           python -m pip install --user dist/*
           cd ..
+          echo /home/github/.local/bin >> $GITHUB_PATH
       - name: Download spire-agent and obtain JWT
         id: spire-agent
         run: |
@@ -58,7 +59,7 @@ jobs:
       - name: Sign Project
         uses: mayaCostantini/sigstore-ansible-github-action@main
         with:
-          project-path: "./wildfly"
+          project_path: "./wildfly"
           identity-token: ${{ steps.spire-agent.outputs.spire_jwt }}
           fulcio-url: "${{ vars.FULCIO_URL }}"
           rekor-url: "${{ vars.REKOR_URL }}"
