@@ -28,6 +28,7 @@ jobs:
           cd ansible-sign
           python setup.py bdist_wheel
           python -m pip install --user dist/*
+          cd ..
       - name: Download spire-agent and obtain JWT
         run: |
           set -e
@@ -42,7 +43,17 @@ jobs:
           recursive-include playbooks *.yml
           recursive-include roles *.yml
           EOF
-              
+
+      - name: Download Rekor and CT log
+        run: |
+          set -e
+
+          # Download Rekor Certificate
+          curl -L -o rekor.pub ${{ vars.TUF_URL }}/targets/rekor-pubkey
+
+          # Download CT log Certificate
+          curl -L -o ctlog.pub ${{ vars.TUF_URL }}/targets/ctfe.pub
+
       # - name: Sign Project
       #   uses: mayaCostantini/sigstore-ansible-github-action@main
 
