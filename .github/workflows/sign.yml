@@ -54,7 +54,7 @@ jobs:
           curl -L -o rekor.pub ${{ vars.TUF_URL }}/targets/rekor-pubkey
 
           # Download CT log Certificate
-          curl -L -o ctlog.pub ${{ vars.TUF_URL }}/targets/ctfe.pub
+          curl -L -o ctfe.pub ${{ vars.TUF_URL }}/targets/ctfe.pub
 
       - name: Sign Project
         uses: mayaCostantini/sigstore-ansible-github-action@main
