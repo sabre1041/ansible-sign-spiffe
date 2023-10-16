@@ -67,6 +67,7 @@ jobs:
           install-ansible-sign: 'false'
           ctfe: ctfe.pub
           rekor-root-pubkey: rekor.pub
+          push-artifacts: 'false'
 
 
       
