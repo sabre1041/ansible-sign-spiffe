@@ -56,6 +56,9 @@ jobs:
           # Download CT log Certificate
           curl -L -o ctfe.pub ${{ vars.TUF_URL }}/targets/ctfe.pub
 
+          # Download Fulcio
+          curl -L -o fulcio.crt ${{ vars.TUF_URL }}/targets/fulcio-cert
+
       - name: Sign Project
         uses: sabre1041/sigstore-ansible-github-action@enhancements
         with:
@@ -70,5 +73,5 @@ jobs:
           verify: true
           verify-cert-identity: "${{ vars.CERT_IDENTITY }}"
           verify-oidc-issuer: "${{ vars.OIDC_URL }}"
-          internal-be-careful-debug: true
- 
+          verify-certificate-chain: fulcio.crt
+          internal-be-careful-debug: true 
