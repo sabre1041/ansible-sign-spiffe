@@ -74,4 +74,5 @@ jobs:
           verify-cert-identity: "${{ vars.CERT_IDENTITY }}"
           verify-oidc-issuer: "${{ vars.OIDC_URL }}"
           verify-certificate-chain: fulcio.crt
+          internal-be-careful-debug: 'true'
 
