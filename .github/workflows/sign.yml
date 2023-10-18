@@ -15,7 +15,7 @@ jobs:
         with:
           repository: ansible-middleware/wildfly
           path: wildfly
-      - name: Checkout ansible-sign
+      - name: Checkout ansible-sign Project
         uses: actions/checkout@v4
         with:
           repository: mayaCostantini/ansible-sign
