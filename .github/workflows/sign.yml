@@ -56,7 +56,7 @@ jobs:
           # Download CT log Certificate
           curl -L -o ctfe.pub ${{ vars.TUF_URL }}/targets/ctfe.pub
 
-          # Download Fulcio
+          # Download Fulcio Certificate
           curl -L -o fulcio.crt ${{ vars.TUF_URL }}/targets/fulcio-cert
 
       - name: Sign Project
