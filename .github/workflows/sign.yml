@@ -75,3 +75,4 @@ jobs:
           verify-oidc-issuer: "${{ vars.OIDC_URL }}"
           verify-certificate-chain: fulcio.crt
           internal-be-careful-debug: true
+
